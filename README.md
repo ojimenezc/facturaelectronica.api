@@ -44,7 +44,7 @@ Con esto el .war resultante podrá ser ejecutado en el servidor web de su prefer
 #### Docker
 El API contiene un archivo de docker para facilitar el despliegue, para usarlo ejecute el siguiente comando
 ```sh
-    sudo docker build -t softcorpcr/facturaelectronica:latest .
+    sudo docker build -t api/facturaelectronica:latest .
 ```
 
 ### Configuración
