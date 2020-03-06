@@ -8,7 +8,7 @@ El API de factura electrónica contiene todas las funciones necesarias para la f
 Para conocer las opciones que provee el API puede revisar la documentación oficial en postman
 https://documenter.getpostman.com/view/9434271/SzRw1r1p?version=latest
 
-### Tech
+### Información técnica
 
 Especificaciones técnicas:
 
@@ -40,6 +40,12 @@ $ mvn clean verify -Dmaven.test.skip=true -Dliquibase.should.run=true
 $ mvn package -P dev
 ```
 Con esto el .war resultante podrá ser ejecutado en el servidor web de su preferencia
+
+#### Docker
+El API contiene un archivo de docker para facilitar el despliegue, para usarlo ejecute el siguiente comando
+```sh
+    sudo docker build -t api/facturaelectronica:latest .
+```
 
 ### Configuración
 Toda la configuración necesaria se encuentra en el de resources en básicamente 2 archivos.
