@@ -1,6 +1,4 @@
-package com.softcorp.cr.facturaelectronica.api.controllers;/*
- * Copyright (c) 2020.  SOFTCORP-CR S.A. All Rights Reserved. Any partial or total reproduction of this file without authorization from the owner is prohibited.
- */
+package com.softcorp.cr.facturaelectronica.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
