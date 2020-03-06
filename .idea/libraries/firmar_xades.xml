@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="firmar-xades">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/firmador/firmar-xades.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

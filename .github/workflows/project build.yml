@@ -1,0 +1,13 @@
+name: Project Build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: build project
+      run: mvn clean verify package -Dmaven.test.skip=true -Dliquibase.should.run=false
