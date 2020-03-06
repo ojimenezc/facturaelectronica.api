@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'facturaelectronica'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'api'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'j86wNMjTeSa9CWrfuEqsb'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'factura2019'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - my-db:/mysql
+# Names our volume
+volumes:
+  my-db:
