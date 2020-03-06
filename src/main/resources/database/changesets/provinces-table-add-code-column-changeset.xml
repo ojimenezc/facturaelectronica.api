@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019.  SOFTCORP-CR S.A. All Rights Reserved. Any partial or total reproduction of this file without authorization from the owner is prohibited.
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="oscar jimenez carmona" id="7">
+        <preConditions onFail="CONTINUE" onError="CONTINUE">
+            <not>
+                <columnExists columnName="code" tableName="provinces"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="provinces">
+            <column name="code" type="varchar(2)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

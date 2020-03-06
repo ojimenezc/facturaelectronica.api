@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2019.  SOFTCORP-CR S.A. All Rights Reserved. Any partial or total reproduction of this file without authorization from the owner is prohibited.
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="oscar jimenez carmona" id="3">
+        <preConditions onFail="CONTINUE" onError="CONTINUE">
+            <not>
+                <tableExists tableName="companies"/>
+            </not>
+        </preConditions>
+        <createTable tableName="companies"
+                     remarks="A table to contain all customers information">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="company_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="business_name" type="varchar(100)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="identification_type" type="BIGINT">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="identification_number" type="varchar(20)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="contact_email" type="varchar(50)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="contact_phone" type="varchar(50)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="country_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="province_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="county_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="district_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="neigborhood_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="other_signs" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="default_currency" type="BIGINT" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atv_username" type="varchar(500)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="atv_password" type="varchar(500)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="certificate_pin" type="varchar(500)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="certificate" type="TEXT">
+                <constraints nullable="true"></constraints>
+            </column>
+            <column name="active" type="BIT(1)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+        <addAutoIncrement
+                columnDataType="BIGINT"
+                columnName="id"
+                incrementBy="1"
+                startWith="1"
+                tableName="companies"/>
+    </changeSet>
+</databaseChangeLog>
