@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="changesets/customers-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/company-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/customers-companies-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_customer_companies_company_constraint.xml"
+             relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_customer_companies_customer_constraint.xml"
+             relativeToChangelogFile="true"/>
+
+    <include file="changesets/countries-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/provinces-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/counties-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/districts-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/neighborhoods-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_province_country_constraint.xml"
+             relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_county_province_constraint.xml"
+             relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_district_county_constraint.xml"
+             relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_neighborhood_district_constraint.xml"
+             relativeToChangelogFile="true"/>
+
+    <include file="changesets/document-types-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/identification-types-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_company_identification_type_constraint.xml"
+             relativeToChangelogFile="true"/>
+
+    <include file="changesets/audit-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/currencies-table-changeset.xml" relativeToChangelogFile="true"/>
+
+    <include file="changesets/foreing_key_constraints/fk_currency_type_constraint.xml" relativeToChangelogFile="true"/>
+
+    <include file="changesets/offices-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/point-of-sales-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/consecutives-table-changeset.xml" relativeToChangelogFile="true"/>
+
+    <include file="changesets/documents-table-changeset.xml" relativeToChangelogFile="true"/>
+
+    <!-- Clients table -->
+    <include file="changesets/clients-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_client_identification_type_constraint.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_client_province_constraint.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/foreing_key_constraints/fk_client_county_constraint.xml" relativeToChangelogFile="true"/>
+
+    <include file="changesets/provinces-table-add-code-column-changeset.xml" relativeToChangelogFile="true"/>
+
+    <include file="changesets/customers-clients-table-changeset.xml" relativeToChangelogFile="true"/>
+
+    <include file="changesets/activities-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/company-table-add-active-column-chageset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/taxes-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/unitmeasures-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/products-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/rates-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/economic-activities-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/company-activities-table-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/rates-table-add-rate-column-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/documents-add-base64-columns-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/documents-add-hacienda-receipt-columns-changeset.xml" relativeToChangelogFile="true"/>
+    <include file="changesets/documents-add-emails-columns-changeset.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

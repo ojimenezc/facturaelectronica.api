@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="firmador">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/main/resources/firmador" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/src/main/resources/firmador" recursive="false" />
+  </library>
+</component>

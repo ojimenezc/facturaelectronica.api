@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="oscar jimenez carmona" id="3">
+        <preConditions onFail="CONTINUE" onError="CONTINUE">
+            <tableExists tableName="documents"/>
+            <not>
+                <columnExists tableName="documents" columnName="email_status"></columnExists>
+                <columnExists tableName="documents" columnName="pdf_base_64"></columnExists>
+                <columnExists tableName="documents" columnName="email_sent_date"></columnExists>
+            </not>
+        </preConditions>
+        <addColumn tableName="documents">
+            <column name="email_status" type="INT(11)"/>
+        </addColumn>
+        <addColumn tableName="documents">
+            <column name="pdf_base_64" type="MEDIUMTEXT CHARACTER SET utf8"/>
+        </addColumn>
+        <addColumn tableName="documents">
+            <column name="email_sent_date" type="DATETIME(6)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
