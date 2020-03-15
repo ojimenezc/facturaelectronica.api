@@ -3,7 +3,6 @@
 package com.softcorp.cr.facturaelectronica.api.repositories;
 
 import com.softcorp.cr.facturaelectronica.api.entities.CompaniesEntity;
-import com.softcorp.cr.facturaelectronica.api.entities.ConsecutivesEntity;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +17,8 @@ import java.util.List;
 @Repository
 public interface CompaniesRepository extends CrudRepository<CompaniesEntity, Integer> {
     @Query(value = "SELECT * FROM companies c INNER JOIN customer_companies cc WHERE c.id=cc.company_id AND cc.customer_id=?1 AND c.active=1", nativeQuery = true)
-    public List<CompaniesEntity> getCompnaiesByCustomer(@Param("customerId") int customerId);
+    public List<CompaniesEntity> getCompaniesByCustomer(@Param("customerId") int customerId);
+
+    @Query(value = "SELECT * FROM companies c WHERE c.identification_number=?1  LIMIT 1", nativeQuery = true)
+    public CompaniesEntity getCompanyByIdentificationNumber(@Param("identificationNumber") String identificationNumber);
 }

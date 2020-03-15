@@ -30,9 +30,6 @@ public class CustomerController extends BaseController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<CustomersEntity> create(@RequestBody CustomersEntity customersEntity, HttpServletRequest request) throws JsonProcessingException {
         try {
-            if (customersEntity.getSymbioticID() == 0) {
-                customersEntity.setSymbioticID(customersRepository.getNextSymbioticID());
-            }
 
             Encrypter encrypter = new Encrypter();
             customersEntity.setPassword(encrypter.encrypt(customersEntity.getPassword()));
