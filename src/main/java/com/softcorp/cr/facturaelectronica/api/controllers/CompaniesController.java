@@ -26,31 +26,38 @@ public class CompaniesController extends BaseController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public CompaniesEntity save(@RequestBody CompaniesSaveRequestDTO request) {
         try {
-            CompaniesEntity newCompany = request.getCompany();
-            boolean isUpdate = newCompany.getId() > 0;
-            newCompany.setAtvPassword(encrypter.encrypt(request.getCompany().getAtvPassword()));
-            newCompany.setCertificatePin(encrypter.encrypt(request.getCompany().getCertificatePin()));
-            newCompany.setAtvCertificate(encrypter.encrypt(request.getCompany().getAtvCertificate()));
-            newCompany.setActive(true);
-            CompaniesEntity newCompanySaved = companiesRepository.save(newCompany);
-            if (null != newCompanySaved && newCompanySaved.getId() > 0 && !isUpdate) {
-                CustomerCompanyEntity customerCompany = new CustomerCompanyEntity();
-                customerCompany.setCompanyId(newCompanySaved.getId());
-                customerCompany.setCustomerId(request.getCustomerId());
-                customerCompaniesRepository.save(customerCompany);
+
+            CompaniesEntity existing = companiesRepository.getCompanyByIdentificationNumber(request.getCompany().getIdentificationNumber());
+            if (null != existing) {
+                return update(request);
+                //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("The company with ID = %s already exists", request.getCompany().getIdentificationNumber()));
+            } else {
+
+                CompaniesEntity newCompany = request.getCompany();
+                boolean isUpdate = newCompany.getId() > 0;
+                newCompany.setAtvPassword(encrypter.encrypt(request.getCompany().getAtvPassword()));
+                newCompany.setCertificatePin(encrypter.encrypt(request.getCompany().getCertificatePin()));
+                newCompany.setAtvCertificate(encrypter.encrypt(request.getCompany().getAtvCertificate()));
+                newCompany.setActive(true);
+                CompaniesEntity newCompanySaved = companiesRepository.save(newCompany);
+                if (null != newCompanySaved && newCompanySaved.getId() > 0 && !isUpdate) {
+                    CustomerCompanyEntity customerCompany = new CustomerCompanyEntity();
+                    customerCompany.setCompanyId(newCompanySaved.getId());
+                    customerCompany.setCustomerId(request.getCustomerId());
+                    customerCompaniesRepository.save(customerCompany);
+                }
+                newCompanySaved.setCertificatePin(encrypter.decrypt(newCompanySaved.getCertificatePin()));
+                newCompanySaved.setAtvPassword(encrypter.decrypt(newCompanySaved.getAtvPassword()));
+                newCompanySaved.setAtvCertificate(encrypter.decrypt(newCompanySaved.getAtvCertificate()));
+                return newCompanySaved;
             }
-            newCompanySaved.setCertificatePin(encrypter.decrypt(newCompanySaved.getCertificatePin()));
-            newCompanySaved.setAtvPassword(encrypter.decrypt(newCompanySaved.getAtvPassword()));
-            newCompanySaved.setAtvCertificate(encrypter.decrypt(newCompanySaved.getAtvCertificate()));
-            return newCompanySaved;
         } catch (Exception e) {
             loggerService.error(e);
-            return null;
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
-    public CompaniesEntity update(@RequestBody CompaniesSaveRequestDTO request) {
+    public CompaniesEntity update(CompaniesSaveRequestDTO request) {
         try {
             boolean isUpdate = request.getCompany().getId() > 0;
             request.getCompany().setAtvPassword(encrypter.encrypt(request.getCompany().getAtvPassword()));
@@ -80,11 +87,11 @@ public class CompaniesController extends BaseController {
     @RequestMapping(value = "/get", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<CompaniesEntity> get(int customerId) {
         try {
-            List<CompaniesEntity> returnValue = companiesRepository.getCompnaiesByCustomer(customerId);
+            List<CompaniesEntity> returnValue = companiesRepository.getCompaniesByCustomer(customerId);
             returnValue.stream().forEach(company -> {
                 company.setCertificatePin(encrypter.decrypt(company.getCertificatePin()));
                 company.setAtvPassword(encrypter.decrypt(company.getAtvPassword()));
-                company.setAtvCertificate(encrypter.encrypt(company.getAtvCertificate()));
+                company.setAtvCertificate(encrypter.decrypt(company.getAtvCertificate()));
             });
             return returnValue;
         } catch (Exception e) {

@@ -30,26 +30,17 @@ public class CustomerController extends BaseController {
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<CustomersEntity> create(@RequestBody CustomersEntity customersEntity, HttpServletRequest request) throws JsonProcessingException {
         try {
-            CreateIDPUserRequestDTO createIDPUserRequestDTO = new CreateIDPUserRequestDTO();
-            createIDPUserRequestDTO.setEmail(customersEntity.getRepresentativeEmail());
-            createIDPUserRequestDTO.setName(customersEntity.getRepresentativeName());
-            createIDPUserRequestDTO.setPassword(customersEntity.getPassword());
-            Boolean userCreatedInIDP = true;
-
-            // userCreatedInIDP = usersHelper.createUserInIDP(createIDPUserRequestDTO, request.getHeader("authorization"));
-
-            if (userCreatedInIDP) {
-                Encrypter encrypter = new Encrypter();
-                customersEntity.setPassword(encrypter.encrypt(customersEntity.getPassword()));
-                customersEntity.setUsername(encrypter.encrypt(customersEntity.getUsername()));
-                customersRepository.save(customersEntity);
-                customersEntity.setPassword(null);
-                customersEntity.setBiometrics(null);
-                return ResponseEntity.ok(customersEntity);
-            } else {
-                loggerService.error("The user could not be created in IDP [" + customersEntity.getRepresentativeEmail() + "]");
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The user could not be created in IDP [" + customersEntity.getRepresentativeEmail() + "]");
+            if (customersEntity.getSymbioticID() == 0) {
+                customersEntity.setSymbioticID(customersRepository.getNextSymbioticID());
             }
+
+            Encrypter encrypter = new Encrypter();
+            customersEntity.setPassword(encrypter.encrypt(customersEntity.getPassword()));
+            customersEntity.setUsername(encrypter.encrypt(customersEntity.getUsername()));
+            customersRepository.save(customersEntity);
+            customersEntity.setPassword(null);
+            customersEntity.setBiometrics(null);
+            return ResponseEntity.ok(customersEntity);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -64,11 +55,14 @@ public class CustomerController extends BaseController {
     @RequestMapping(value = "/login", method = RequestMethod.GET, headers = "Accept=application/json")
     public Object login(String username, String password) throws JsonProcessingException {
         try {
-            ClientIDPLoginDTO clientIDPLoginDTO = new ClientIDPLoginDTO();
+            Encrypter encrypter = new Encrypter();
+            CustomersEntity exists = customersRepository.getByUsernameAndPassword(encrypter.encrypt(username), encrypter.encrypt(password));
+            return exists;
+            /*ClientIDPLoginDTO clientIDPLoginDTO = new ClientIDPLoginDTO();
             clientIDPLoginDTO.setGrantType("password");
             clientIDPLoginDTO.setPassword(password);
             clientIDPLoginDTO.setUsername(username);
-            return usersHelper.loginClientInIDP(clientIDPLoginDTO);
+            return usersHelper.loginClientInIDP(clientIDPLoginDTO);*/
         } catch (Exception e) {
             loggerService.error("Error login in user " + e.getMessage());
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Error login in user");

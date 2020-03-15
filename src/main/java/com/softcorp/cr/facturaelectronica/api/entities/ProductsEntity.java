@@ -18,10 +18,6 @@ public class ProductsEntity {
     @Column(name = "tax_code")
     private String taxType;
 
-    @JsonProperty("taxName")
-    @Column(name = "tax_name")
-    private String taxName;
-
     @JsonProperty("rateType")
     @Column(name = "rate_type")
     private String rateType;
@@ -41,14 +37,6 @@ public class ProductsEntity {
     @JsonProperty("productPrice")
     @Column(name = "price")
     private float productPrice;
-
-    @JsonProperty("taxRate")
-    @Column(name = "tax_rate")
-    private float taxRate;
-
-    @JsonProperty("taxRateCode")
-    @Column(name = "tax_rate_code")
-    private String taxRateCode;
 
     @JsonProperty("prodCurrency")
     @Column(name = "currency")
